@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style>
+		/*自定义右击菜单*/ 
+		.contain {
+	     background-color: #D1CEBC;
+	     height: 100px;
+	     width: 300px;
+ 		}
+ 		.menu {
+	    width: 150px;
+	    background-color: white;
+	    visibility: hidden;
+	    position: absolute;
+	    box-shadow: 0px 0px 10px #D1CEBC
+ 		}
+	 	.menu-item {
+	     background-color: #fff;
+	     margin: 0;
+	 	}
+	 	.menu-item-btn {
+	    width: 146px;
+	    margin: 2px;
+	    border: 0;
+	    text-align: left;
+	    padding-left: 60px;
+	    padding-top: 5px;
+	    padding-bottom: 5px;
+	    background-color: #fff;
+	    color: #000;
+	 	}
+		.menu-item-btn:hover {
+		    background-color: #D1CEBC;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="contain" id="contain-friend">右击显示菜单</div>
+	<label id="label1"></label>
+	<div id="menu-friend" class="menu">
+	   <div class="menu-item">
+	       <button class="menu-item-btn" id="btn1">菜单一</button>
+	   </div>
+	   <div class="menu-item">
+	       <button class="menu-item-btn" id="btn2">菜单二</button>
+	   </div>
+	</div>
+	<script>
+		window.onload = function() {
+		//以下为自定义右击菜单
+			document.oncontextmenu = function(e) {
+				//阻止执行浏览器默认右击事件
+				e.preventDefault();
+				//聊天室好友列表
+				if (document.getElementById("menu-friend")) {
+					var menu1 = document.getElementById("menu-friend");
+					menu1.style.display = "block";
+					document.getElementById("contain-friend").onmousedown = function(e) {　　　　　 //菜单定位
+						menu1.style.left = e.offsetX + "px";
+						menu1.style.top = document.documentElement.scrollTop + e.clientY + "px";
+						//alert(menu1.style.top)
+						if(document.getElementById("contain-friend")) {
+							if(e.button == 2) {
+								menu1.style.visibility = "visible";
+							} else {
+								menu1.style.visibility = "hidden";
+							}
+						}
+					}
+				}
+			}
+			if(document.getElementById("btn1")) {
+				document.getElementById("btn1").onmousedown = function(e) {
+					document.getElementById("label1").innerHTML = "你点击了菜单一"
+				}
+			}
+			if(document.getElementById("btn2")) {
+				document.getElementById("btn2").onmousedown = function(e) {
+					document.getElementById("label1").innerHTML = "你点击了菜单二"
+				}
+			}
+			return false;
+			//与e.preventDefault();功能相同，但是必须放在最后否则在return后面的内容均不执行
+		}
+	</script>
+</body>
+</html>
